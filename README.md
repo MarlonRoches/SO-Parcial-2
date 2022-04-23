@@ -259,11 +259,175 @@ Se Usa al crear un **NUEVO** proceso.
 * Un programa se convierte en un proceso y se **añade a la cola** del planificador a corto plazo.
 
 ## ***⏭️Mediano plazo***
-Funcion de intercambio de estado. 
+Funcion de intercambio de estado. Encargado de **pasar a memoria** principal. No emplea memoria virtual.
 * (Listo/Suspendido ->  Listo)
 * (Bloqueado/Suspendido ->  Bloqueado)
 ## ***▶️Corto plazo***
-Decide que un proceso esta listo y pasa a ejecutar.
+Decide que un proceso esta listo y pasa a ejecutar. Y de ejecucion a 
 * Listo -> Ejecutado
+* Decide si ingresar o expulsar un proceso a favor de otro. 
+* Se enciende cuando un programa esta esperando un suceso y pasa.
+* **Repartir el tiempo del procesador para optimice los elementos** del comportamiento del sistema.
 ## ***💻E/S***
 Decide cual de todos los es el siguiente a leer.
+
+```diff
++ #############################################
+```
+## Criterios de Evalucacion
+
+
+```diff
+- #############################################
+```
+# Gestion de Memoria
+## ESPACIO DE DIRECCIONES LOGICO Y FISICO
+### Fisica
+* Ubicacion fisica en la memoria. Es decir, **el disco**. 
+### Logica
+* **Conjunto de direcciones fisicas** generadas por el CPU durante la ejecucion. Direccinoes de un programa. 
+## INTERCAMBIO
+Es el proceso donde un **proceso puede intercambiar entre memoria principal y auxiliares**.
+
+* **EJEMPLO**: Cuando termina un Quantum
+* **MEMORIA**: Suficientemente rapido para cambiar
+* *CPU*: Suficientemente lento para dejar trabaja.
+* Algoritmos de planificación por prioridad
+
+* Cambio por mayor Prioridad: **Roll in, Roll out**
+* Dado lo anterior: Depende algoritmo de vinculación
+* Misma Direccion: Compilacion y Carga
+
+Una **variante** de Intercambio, *inactivo cuando hay memoria*, *activo cuando hay muchos procesos*
+```diff
++ #############################################
+```
+## ASIGNACION CONTIGUA
+Manera de asignar espacios de memoria,  donde se van haciendo **particiones** (tantas como multiprogramacion sea la maquina).
+
+Asignación con una sola partición
+Se **necesita proteger el codigo y datos del S.O**, para que procesos de usuario no los modifiquen.
+
+Metodo: Se van sacando e ingresando *BLOQUES* completos de memoria. NO SE FRAGMENTA, se ingresan bloques *"solidos"*, que van saliendo y entrando conforme se requiera.
+```diff
++ #############################################
+```
+## **FRAGMENTACION**
+## **Externa**
+**WORST First** es el mejor, ya que no va generando los espacios de memoria, priorizando que los espacios **no se generen muchas fragmentaciones**. Es decir, buscamos el bloque MAS grande para que no se llene.
+
+De esta manera, generamos bloques nuevos para disponibilidad de memoria.
+
+- Buscamos el bloque **mas grande** para nuestro programa y luego vamos a ingresar nuestro proceso:
+1. [----------]
+- Le asignamos lo que necesitemos
+2. [+++++-----]
+- El espacio del bloque que no usamos, lo marcamos como dispobible.
+3. [+++++][-----]
+
+### **Interna**
+**BEST First** con esto nos referimos a que buscamos el bloque donde quede mas justito el programa. Por lo que se generara una particion muy chica.
+
+- Buscamos el bloque **mas justo** para nuestro programa y luego vamos a ingresar nuestro proceso:
+1. [-------]
+- Le asignamos lo que necesitemos
+2. [+++++--]
+- El espacio del bloque que no usamos, como es poco significativo, lo marcamos como ocupado. Ya que no es nada significativo.
+3. 2. [+++++**]
+```diff
++ #############################################
+```
+## PAGINACION
+**Fragmentacion Interna**
+### ***Memoria Fisica:*** 
+Dividida en FRAMES ***(MARCOS)***
+### ***Memoria Logica:*** 
+Bloques del mismo tamaño llamados ***(PAGINAS)***
+Aqui se almacenan **los fragmentos** de los programas que entran.
+
+### Tabla de paginas
+* Esta nos ayuda a traducir las direcciones logicas a fisicas.
+* Se almacena <numero de pag, marco de proceso>
+* Estas se crean por proceso insertado.
+
+### **Dirección de memoria:**
+#### **Numero de pagina** ***(p)***
+Incice en la tabla de pagina
+
+#### **Desplazamiento en la pagina** ***(d)***
+Cuantos bytes me tengo que saltar para llegar al byte.
+
+Direccion logica: 0x1234
+```diff
++ #############################################
+```
+## SEGMENTACION
+* Es un esquema de memoria para el programador.
+* Se maneja por segmentos.
+### Codigo
+Programa principal y funciones
+### Stack
+Es el camino que seguira el programa FI-LO
+### DATOS
+Variables globales.
+### Direccion Logica 
+* <segmeto, desplazamiento>
+* Si el segmento excede el tamanio, **exepcion**.
+### Tabla de segmentos
+**Mapeado 2d** de diirecciones fisicas
+Base: Direcicon FISICA inicial
+Limite: Tamaño del segmento.
+### STBR Segment Table Base Register
+Apunta a la **direccion** de la tabla de segmentos en memoria
+### STLR Segment Table Length Register
+* Numero de segmentos del programa
+* Si la direccion es valida si es < a STLR, osea, no se sale del frame.
+
+### Recolocacion
+Es **dinamica y por tabla de segmetos**
+### Comparticion 
+Puede **compartir segmentos** en el mismo segmento
+### Asignacion
+Primero o el mejor ajuste
+**Fragmentacion Eterna**
+ ### Bits de proteccion
+ Tenemos un bit de segmento que da permisos para:
+ * lectura
+ * escritura
+ * ejecucion. 
+ 
+ De eso depende que pueda hacer
+Direccion logica: 0x1234
+```diff
++ #############################################
+```
+## SEGMENTACION CON PAGINACION
+
+Los **segmentos se dividen en paginas**.
+
+1. Por lo que tenemos inicio y final de segmento.
+2. El segmento contiene la direccion base para cada tabla de paginas.
+2. Tenemos inicio y final de paginas.
+2. Con la direccion de la pagina y la direccion fisica, llego al dato.
+
+* SOLUCIONA LOS TIEMPOS DE BUSQUEDA Y FRAGMENTACION EXTERNA
+* Cada segmento tiene la direccion base para cada tabla de paginas.
+* Si el segmento excede el tamanio, **exepcion**.
+```
+s = segmento
+f = marcp
+d = desplazamiento
+```
+
+```diff
++ #############################################
+```
+## SEGMENTACION CON PAGINACION INTEL
+2 Niveles de paginacion
+
+* ↓ Selector: Direccion de Segmento
+* ↓ Tabla de Descriptores: Datos del segmento que queremos
+* ↓ Tabla de Descriptores: Datos del segmento que queremos
+* ↓ Segmento: Directorio de Paginas
+* ↓ Paginas: Cuanto me tengo que mover para obtener el marco
+* ↓ Dezplasamiento: Direccion Fisica que estoy buscando
