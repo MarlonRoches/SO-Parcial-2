@@ -71,7 +71,7 @@ Hay cuatro aspectos importantes en la investigación del interbloqueo:
 * *Problema*: desperdicio de recursos *->* Postergación Indefinida.
 
 ### Negación de la condición de **“No apropiatividad”** 
-* **Soltar recursos después de una 2da petición, y pedirlos junto con los que no se tiene,** todos de una vez 
+* **Soltar recursos después de una 2da petición**, y pedirlos junto con los que no se tiene, **todos de una vez**
 * *Problema:* Postergación Indefinida.
 
 ### Negación de la condición de **“Espera Circular”**:
@@ -101,7 +101,7 @@ Consiste en despejar interbloqueos de un sistema, de manera que pueda seguir ope
 * **Cada proceso deberá pedir todos sus recursos** requeridos de una sola vez y no podrá proceder hasta que se le hayan sido asignados.
 
 * **Si un proceso quiere mas recursos**, **debe liberar los que tiene** y de ser necesario, entonces puede pedir **pedir los asignados y los adicionales**
-*** Se impondrá la ordenación lineal** de los tipos de recursos en todos los procesos, es decir, si a un proceso le han sido asignados recursos de un tipo dado, **solo podrá pedir aquellos recursos de los tipos que siguen en el ordenamiento.**
+* **Se impondrá la ordenación lineal** de los tipos de recursos en todos los procesos, es decir, si a un proceso le han sido asignados recursos de un tipo dado, **solo podrá pedir aquellos recursos de los tipos que siguen en el ordenamiento.**
 
 ```diff
 + #############################################
@@ -136,13 +136,13 @@ O directamente, **impidiendo la aparición de un circulo viciosos de espera.** s
 + #############################################
 ```
 ## **ESTRATEGIAS DE PREVENCION VS DETECCION**
-* ***Prevencion***: Resuelven **limitando acceso y restringiendo** acceso sobre procesos.
-* ***Deteccion***:** Otorgaran los recursos** y el **SO (con algoritmos) detectara las condiciones** para circulos viciosos.
+* **Prevencion**: Resuelven **limitando acceso y restringiendo** acceso sobre procesos.
+* **Deteccion**: **Otorgaran los recursos** y el **SO (con algoritmos) detectara las condiciones** para circulos viciosos.
 
 ## **ESTRATEGIAS DE DETECCION** 
-* Para determinar si hay un interbloqueo,** se verificaran los estados** de los recursos.
+* Para determinar si hay un interbloqueo, **se verificaran los estados** de los recursos.
 * **Al solicitar o devolver** recursos , se actualiza el estado y **se hace una verificación detectar ciclos**. 
-* Este método **está basado** en suponer que un **interbloqueo no se presente** y que** los recursos del sistema que han sido asignados**, se liberarán en el momento que otro proceso lo requiera.
+* Este método **está basado** en suponer que un **interbloqueo no se presente** y que **los recursos del sistema que han sido asignados**, se liberarán en el momento que otro proceso lo requiera.
 ```diff
 + #############################################
 ```
