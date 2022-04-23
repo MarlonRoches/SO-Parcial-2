@@ -53,7 +53,7 @@ Cuando los recursos son planificados en función de **prioridades**, un proceso 
 Se puede evitar al **permitir que un proceso aumente de prioridad mientras espera**, a esto se le dice envejecimiento.  
 
 ```diff
-+ -------------------------------------------------------------------------------
++ #############################################----
 ```
 
 # **ESTUDIO DEL INTERBLOQUEO**
@@ -91,7 +91,7 @@ La meta es **imponer condiciones menos estrictas** que en la prevención, **para
 ## **RECUPERACION del Interbloqueo**
 Consiste en despejar interbloqueos de un sistema, de manera que pueda seguir operando libre de ellos, y qque **los procesos estancados lleguen a su terminación, liberando sus recursos.**
 ```diff
-+ ---------------------------------------------------------------------------
++ #############################################
 ```
 ## **HAVENDER**:
 ```
@@ -104,7 +104,7 @@ Consiste en despejar interbloqueos de un sistema, de manera que pueda seguir ope
 *** Se impondrá la ordenación lineal** de los tipos de recursos en todos los procesos, es decir, si a un proceso le han sido asignados recursos de un tipo dado, **solo podrá pedir aquellos recursos de los tipos que siguen en el ordenamiento.**
 
 ```diff
-+ ---------------------------------------------------------------------------
++ #############################################
 ```
 ## **Evitación o Predicción del Interbloqueo**
 Una forma de resolver el problema del interbloqueo, que se diferencia sutilmente de la prevención, es la predicción del interbloqueo. 
@@ -120,7 +120,7 @@ Impidiendo una de las tres condiciones necesarias:
 
 O directamente, **impidiendo la aparición de un circulo viciosos de espera.** siendo ineficiente de los recursos y una ejecución ineficiente de los procesos. 
 ```diff
-+ ---------------------------------------------------------------------------
++ #############################################
 ```
 ## **PREDICCION DE INTERBLOQUEO**
 ### Requirimientos
@@ -133,7 +133,7 @@ O directamente, **impidiendo la aparición de un circulo viciosos de espera.** s
 * **No iniciar el proceso** si puede llevar a interbloqueo.
 * **No otorgar recusos al proceso** si puede llevar a interbloqueo.
 ```diff
-+ ---------------------------------------------------------------------------
++ #############################################
 ```
 ## **ESTRATEGIAS DE PREVENCION VS DETECCION**
 * ***Prevencion***: Resuelven **limitando acceso y restringiendo** acceso sobre procesos.
@@ -144,7 +144,7 @@ O directamente, **impidiendo la aparición de un circulo viciosos de espera.** s
 * **Al solicitar o devolver** recursos , se actualiza el estado y **se hace una verificación detectar ciclos**. 
 * Este método **está basado** en suponer que un **interbloqueo no se presente** y que** los recursos del sistema que han sido asignados**, se liberarán en el momento que otro proceso lo requiera.
 ```diff
-+ ---------------------------------------------------------------------------
++ #############################################
 ```
 ## **RECUPERACION**
 ### MANUAL
@@ -157,7 +157,7 @@ O directamente, **impidiendo la aparición de un circulo viciosos de espera.** s
 * El proceso eliminado **se pierde, pero ahora es posible terminar**.
 * Se pueden **ir eliminando procesos** bloqueados, para que los demas tengan los recursos para terminar
 ```diff
-+ ---------------------------------------------------------------------------
++ #############################################
 ```
 ## **ABORTAR**
 Tenemos dos métodos, en ambos, **el sistema recupera todos los recursos asignados** a los procesos terminados. 
@@ -180,7 +180,7 @@ Se elimina el proceso de **menor prioridad**.
 * ***Cantidad de Recursos:*** Eliminar los que **mas recursos** usen.
 * ***Suspensión / reanudación:*** Trabajo **facil de recuperar**. 
 ```diff
-+ ---------------------------------------------------------------------------
++ #############################################
 ```
 ## **APROPIACION**
 **Quitar** recursos y **asignar a otros** hasta romper el ciclo.
@@ -193,7 +193,7 @@ Si se utiliza la apropiación de recursos para tratar los interbloqueos, hay que
 ## Detección y Recuperación
 Estrategia que se utiliza en **grandes computadoras**, especialmente **sistemas por lote** en los que la **eliminación y su reinicio** suele aceptarse.
 ```diff
-+ ---------------------------------------------------------------------------
++ #############################################
 ```
 ## **ESTRATEGIAS INTEGRADAS** 
 **Puede ser mas eficiente usar diferente estrategias** en diferentes situaciones, una de ellas sugiere lo siguiente: 
@@ -208,7 +208,7 @@ Estrategia que se utiliza en **grandes computadoras**, especialmente **sistemas 
 - ***Memoria principal:*** asignable a los procesos en paginas o segmentos.
 - ***Recursos internos:*** como canales de E / S.
 ```diff
-+ ---------------------------------------------------------------------------
++ #############################################
 ```
 ## **ALG. BANQUERO**
 ## Interbloqueo:
@@ -224,5 +224,46 @@ Los **clientes solicitan dinero** pero tiene que haber dinero para dar y **no qu
 * Los clientes **garantizan los pagos**
 * Los usuarios deben **indicar sus necesidades máximas** por adelantado.
 ```diff
-- ---------------------------------------------------------------------------
+- #############################################
 ```
+
+# PLANIFICACION
+La **clave** de la multiprogramación, esta en la **planificación**
+## **Que es?**
+Asignar procesos para que sean ejecutados en el tiempo.
+De manera que se cimplan con los objetivos del sistema: 
+* tiempo de respuesta
+* productividad
+* eficienca del core 
+
+La **planificación afecta al rendimiento del sistema**, pues determina que proceso esperara y que proceso continuara.
+
+La planificación es una **gestión de dichas colas** que minimice la espera y **optimice el rendimiento del entorno**.
+
+
+## **ESTADOS**
+Debido a que un proceso puede ser suspendido (Debido a requerimientos del sistema O por prioridades ). (Ha sido expulsado de la memoria principal). Se generan nuevos estados :
+
+ * ***🟢Listo:*** Memoria **principal - preparado** para ejecutar.
+ * ***🟡Bloqueado*** Memoria **principal a la espera** de un proceso.
+ * ***🟠Bloqueado y suspendido*** Memoria **secundaria esperando** un suceso.
+ * ***🔵Listo y Suspendido*** El proceso esta en **memoria secundaria** pero esta disponible para ejecutar cudno se cargue en memoria principal.
+* ***Bloqueado -> Bloqueado y Suspendido***.- Si no hay procesos listos al menos un proceso bloqueado se suspende para dar cabida a otro que no este bloqueado.
+* ***Bloqueado y Suspendido -> Listo y Suspendido***- Un proceso bloqueado y suspendido pasa al estado de Listo y suspendido cuando ocurre el suceso que estaba esperando.
+* ***Listo y Suspendido -> Listo*** Mueve de memoria secundaria a principal el proceso que estaba esperando el suceso.  
+
+## ***🆕Largo plazo***
+Se Usa al crear un **NUEVO** proceso.
+* Nuevos -> (Listo/Suspendido ,  Listo)
+* Determinan cuales son los **programas admitidos** en el sistema.
+* Un programa se convierte en un proceso y se **añade a la cola** del planificador a corto plazo.
+
+## ***⏭️Mediano plazo***
+Funcion de intercambio de estado. 
+* (Listo/Suspendido ->  Listo)
+* (Bloqueado/Suspendido ->  Bloqueado)
+## ***▶️Corto plazo***
+Decide que un proceso esta listo y pasa a ejecutar.
+* Listo -> Ejecutado
+## ***💻E/S***
+Decide cual de todos los es el siguiente a leer.
