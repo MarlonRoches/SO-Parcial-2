@@ -16,7 +16,7 @@ Pueden poroducirse en procesos donde los procesos **propios de usuarios** nunca 
 * Existe una **cadena circular** de procesos en la cual **cada uno de ellos mantiene a uno o mas recursos que son requeridos por el siguiente**proceso de la cadena. **(condición de espera circular)**.
 
 
-## **DEADLOCK**
+## **DEADLOCK** 
 *1.* Dos procesos desean imprimir grandes archivos en cinta. 
 
 *2.* El proceso “a” solicita la impresora, que se le concede. 
@@ -119,7 +119,9 @@ Impidiendo una de las tres condiciones necesarias:
 * no apropiación
 
 O directamente, **impidiendo la aparición de un circulo viciosos de espera.** siendo ineficiente de los recursos y una ejecución ineficiente de los procesos. 
-
+```diff
++ ---------------------------------------------------------------------------
+```
 ## **PREDICCION DE INTERBLOQUEO**
 ### Requirimientos
 * En esta **se pueden dar las 3 condiciones**, pero el SO toma **desiciones para asegurar que nunca se generae un interbloqueo.**
@@ -133,8 +135,94 @@ O directamente, **impidiendo la aparición de un circulo viciosos de espera.** s
 ```diff
 + ---------------------------------------------------------------------------
 ```
+## **ESTRATEGIAS DE PREVENCION VS DETECCION**
+* ***Prevencion***: Resuelven **limitando acceso y restringiendo** acceso sobre procesos.
+* ***Deteccion***:** Otorgaran los recursos** y el **SO (con algoritmos) detectara las condiciones** para circulos viciosos.
+
 ## **ESTRATEGIAS DE DETECCION** 
+* Para determinar si hay un interbloqueo,** se verificaran los estados** de los recursos.
+* **Al solicitar o devolver** recursos , se actualiza el estado y **se hace una verificación detectar ciclos**. 
+* Este método **está basado** en suponer que un **interbloqueo no se presente** y que** los recursos del sistema que han sido asignados**, se liberarán en el momento que otro proceso lo requiera.
+```diff
++ ---------------------------------------------------------------------------
+```
+## **RECUPERACION**
+### MANUAL
+* **Informar al operador**que ha ocurrido un interbloqueo y que este ocupe manualmente.
+### SO (Automatica)
+1. **Abortar uno o más procesos** hasta romper la espera circular
+2. **Apropiar algunos recursos** de uno o más de los procesos bloqueados.
 
+* Actualmente, la recuperación se realiza **eliminando un proceso y quitándole sus recursos**. 
+* El proceso eliminado **se pierde, pero ahora es posible terminar**.
+* Se pueden **ir eliminando procesos** bloqueados, para que los demas tengan los recursos para terminar
+```diff
++ ---------------------------------------------------------------------------
+```
+## **ABORTAR**
+Tenemos dos métodos, en ambos, **el sistema recupera todos los recursos asignados** a los procesos terminados. 
+### **1. Abortar TODOS los procesos interbloqueados**
+* **Romperá el ciclo**, pero con un **costo muy elevado**
+* **Habrá que descartar los resultados** de estos cálculos parciales.
 
+### **2. Eliminar 1 a 1**
+* El orden en que se seleccionan los procesos para abortarlos debe basarse en algún **criterio de costo mínimo**.
+ * Por cada **iteracion** se debe **acudir al algoritmo**. 
+* **Tarda** en mucho tiempo 
+* Si éste se encuentra **actualizando un archivo, puede que se corrompa**.
+* Abortar los procesos con el **menor costo posible**
 
+### Prioridades
+* ***Prioridad:*** 
+Se elimina el proceso de **menor prioridad**. 
+* ***Tiempo de procesador:*** Abortara el **proceso que haya utilizado menos tiempo** el procesador, ya que se pierde menos trabajo y facil de recuperar. 
+* ***Tipos de recursos:*** **Recursos son muy necesarios y escasos** será preferible **liberarlos cuanto antes**. 
+* ***Cantidad de Recursos:*** Eliminar los que **mas recursos** usen.
+* ***Suspensión / reanudación:*** Trabajo **facil de recuperar**. 
+```diff
++ ---------------------------------------------------------------------------
+```
+## **APROPIACION**
+**Quitar** recursos y **asignar a otros** hasta romper el ciclo.
 
+Si se utiliza la apropiación de recursos para tratar los interbloqueos, hay que considerar tres aspectos: 
+* Selección de la víctima: A quien le quitaremos. 
+* Retroceso: Cuanto vamos a perder.
+* Bloqueo indefinido: Cuanto nos vamos a tardar.
+
+## Detección y Recuperación
+Estrategia que se utiliza en **grandes computadoras**, especialmente **sistemas por lote** en los que la **eliminación y su reinicio** suele aceptarse.
+```diff
++ ---------------------------------------------------------------------------
+```
+## **ESTRATEGIAS INTEGRADAS** 
+**Puede ser mas eficiente usar diferente estrategias** en diferentes situaciones, una de ellas sugiere lo siguiente: 
+
+* Agrupar los recursos clases diferentes.
+* Ordenación lineal para la prevención de circulo viciosos de espera e impedir el interbloqueo entre clases de recursos.
+* Dentro de cada clase emplear el algoritmo mas apropiado.
+
+### Ejemplo:
+- ***Espacio intercambiable***: bloques de memoria en almacenamiento secundario para el intercambio de procesos.
+- ***Recursos de procesos:*** dispositivos asignables, como unidades de cintas y archivos.
+- ***Memoria principal:*** asignable a los procesos en paginas o segmentos.
+- ***Recursos internos:*** como canales de E / S.
+```diff
++ ---------------------------------------------------------------------------
+```
+## **ALG. BANQUERO**
+## Interbloqueo:
+Se solicitan mas recursos de los disponibles.
+## Estado seguro:
+Se pueden ejecutar sin interbloqueos.
+## Analogia
+Los **clientes solicitan dinero** pero tiene que haber dinero para dar y **no quedarse sin dinero fisico**.  
+### Requerimientos
+* **Numero fijo de recursos asignables**.
+* **Usuarios Constantes**.
+* El banquero debe **satisfacer todas las solicitudes**.
+* Los clientes **garantizan los pagos**
+* Los usuarios deben **indicar sus necesidades máximas** por adelantado.
+```diff
+- ---------------------------------------------------------------------------
+```
